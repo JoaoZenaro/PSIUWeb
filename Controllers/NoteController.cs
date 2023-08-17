@@ -1,4 +1,4 @@
-using livraria.Models;
+using PSIUWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PSIUWeb.Controllers

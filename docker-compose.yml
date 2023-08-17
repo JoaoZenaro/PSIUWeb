@@ -22,6 +22,6 @@ services:
       - SA_PASSWORD=admin
       - ACCEPT_EULA=Y
     volumes:
-      - ./data:/var/opt/mssql/data   
+      - ./Data:/var/opt/mssql/data
     ports:
       - "1450:1433"
