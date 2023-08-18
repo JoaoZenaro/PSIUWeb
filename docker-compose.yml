@@ -13,11 +13,10 @@ services:
       - "./obj:/app/obj"
     environment:
       DOTNET_USE_POLLING_FILE_WATCHER: "1"
-    depends_on:
-      - sqldata
 
   sqldata:
     image: mcr.microsoft.com/mssql/server:2019-latest
+    user: root
     environment:
       - SA_PASSWORD=Admin#2023
       - ACCEPT_EULA=Y
