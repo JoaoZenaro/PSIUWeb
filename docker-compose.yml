@@ -14,12 +14,12 @@ services:
     environment:
       DOTNET_USE_POLLING_FILE_WATCHER: "1"
     depends_on:
-      - db
+      - sqldata
 
-  db:
+  sqldata:
     image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
-      - SA_PASSWORD=admin
+      - SA_PASSWORD=Admin#2023
       - ACCEPT_EULA=Y
     volumes:
       - ./Data:/var/opt/mssql/data
