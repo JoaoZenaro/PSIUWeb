@@ -49,7 +49,7 @@ namespace PSIUWeb.Migrations
                     Weight = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Height = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Ethnicity = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -58,8 +58,7 @@ namespace PSIUWeb.Migrations
                         name: "FK_Patients_AppUser_UserId",
                         column: x => x.UserId,
                         principalTable: "AppUser",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

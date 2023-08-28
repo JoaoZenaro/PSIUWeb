@@ -12,7 +12,7 @@ using PSIUWeb.Models;
 namespace PSIUWeb.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230828142154_InitialCreate")]
+    [Migration("20230828164108_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -111,7 +111,6 @@ namespace PSIUWeb.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Weight")
@@ -128,9 +127,7 @@ namespace PSIUWeb.Migrations
                 {
                     b.HasOne("PSIUWeb.Models.AppUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
