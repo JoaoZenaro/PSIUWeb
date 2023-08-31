@@ -1,0 +1,50 @@
+# Exclude .git directory and its content
+.git
+
+# Exclude obj and bin directories
+obj
+bin
+
+# Exclude temporary files
+**/*.tmp
+**/*.swp
+
+# Exclude Visual Studio and Rider specific files
+.vscode
+.idea
+
+# Exclude user-specific files
+**/*.user
+
+# Exclude backup files
+**/*.bak
+**/*.backup
+
+# Exclude log files
+**/*.log
+
+# Exclude NuGet packages and cache
+**/packages
+**/*.nupkg
+**/project.lock.json
+**/project.assets.json
+
+# Exclude build and publishing artifacts
+**/bin/
+**/obj/
+**/out/
+**/publish/
+
+# Exclude node_modules directory (if not using Node.js)
+node_modules/
+
+# Exclude Docker-specific files
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Exclude Visual Studio and Rider specific files
+.vs
+*.suo
+*.user
+*.sln.iml
