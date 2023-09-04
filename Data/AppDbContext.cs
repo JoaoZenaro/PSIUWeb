@@ -1,12 +1,16 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using PSIUWeb.Models;
 
-namespace PSIUWeb.Models;
-
-public class AppDbContext : DbContext
+namespace PSIUWeb.Data
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    public class AppDbContext : IdentityDbContext<AppUser>
     {
-    }
-    public DbSet<Patient>? Patients { get; set; }
+        public AppDbContext(DbContextOptions options) : base(options)
+        {
+        }
+        public DbSet<Patient>? Patients { get; set; }
 
+    }
 }
