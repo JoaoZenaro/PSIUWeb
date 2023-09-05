@@ -1,5 +1,6 @@
 using PSIUWeb.Models;
 using Microsoft.EntityFrameworkCore;
+using PSIUWeb.Data;
 
 namespace PSIUWeb.Services;
 
@@ -10,7 +11,7 @@ public static class DatabaseManagementService
         using (var serviceScope = app.ApplicationServices.CreateScope())
         {
             var serviceDb = serviceScope.ServiceProvider.GetService<AppDbContext>();
-            serviceDb.Database.Migrate();
+            serviceDb?.Database.Migrate();
         }
     }
 }

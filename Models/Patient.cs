@@ -3,14 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PSIUWeb.Models
 {
-    public enum Ethnicity { 
-        Asiático, 
-        Branco, 
-        Índio, 
-        Negro,
-        Pardo,
-        Outros
-    }
+    public enum Ethnicity { Asiático, Branco, Índio, Negro, Pardo, Outros }
 
     public class Patient
     {
