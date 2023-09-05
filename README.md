@@ -38,8 +38,10 @@ RF.05 | Página inicial de apresentação do projeto;
 
 <details>
   <summary>Diagramas</summary>
-  ## Classe
-  ```mermaid
+
+## Classe
+    
+```mermaid
   classDiagram
     direction LR
     Enum <.. Papeis
@@ -133,7 +135,7 @@ RF.05 | Página inicial de apresentação do projeto;
         - Nome: string
         - CategoriaPaiId: int
     }
-  ```
+```
 
   ## Classe
   ![Diagrama de classe](https://i.ibb.co/Jxd7KBh/class.jpg)
