@@ -28,13 +28,8 @@
 				"ms-dotnettools.vscodeintellicode-csharp",
 				"ms-dotnettools.csdevkit",
 				"dbaeumer.vscode-eslint"
-			]
+			]			
 		}
 	},
-	"forwardPorts": [5000, 1433],
-	"portsAttributes": {
-			"5000": {
-				"protocol": "https"
-			}
-	}
+	"forwardPorts": [5000, 1433]
 }

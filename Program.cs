@@ -47,7 +47,7 @@ if (!app.Environment.IsDevelopment())
 
 DatabaseManagementService.MigrationInitialisation(app);
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
