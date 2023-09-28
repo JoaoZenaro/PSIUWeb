@@ -478,3 +478,6 @@ $RECYCLE.BIN/
 
 # Database files
 Entropy.bin
+
+# Visual Studio Solution file
+*.sln
