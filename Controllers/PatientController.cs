@@ -41,7 +41,7 @@ namespace PSIUWeb.Controllers
                 try
                 {
                     patientRepository.Update(patient);
-                    return View("Index");
+                    return View("Index", patientRepository.GetPatients());
                 }
                 catch (DbUpdateConcurrencyException)
                 {
