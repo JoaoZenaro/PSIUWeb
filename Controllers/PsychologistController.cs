@@ -5,6 +5,7 @@ using PSIUWeb.Models;
 
 namespace PSIUWeb.Controllers
 {
+    [Route("Psico")]
     public class PsychologistController : Controller
     {
         private IPsychologistRepository psychologistRepository;
@@ -15,12 +16,13 @@ namespace PSIUWeb.Controllers
         }
 
         [HttpGet]
+        [Route("")]
         public IActionResult Index()
         {
             return View(psychologistRepository.GetPsychologists());
         }
 
-        [HttpGet]
+        [HttpGet("Edit/{id}")]
         public IActionResult Edit(int? id)
         {
             if (id <= 0 || id == null) return NotFound();
@@ -32,7 +34,7 @@ namespace PSIUWeb.Controllers
             return View(p);
         }
 
-        [HttpPost]
+        [HttpPost("Edit")]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Psychologist Psychologist)
         {
@@ -47,12 +49,11 @@ namespace PSIUWeb.Controllers
                 {
                     throw;
                 }
-
             }
             return View("Index", psychologistRepository.GetPsychologists());
         }
 
-        [HttpGet]
+        [HttpGet("Delete/{id}")]
         public IActionResult Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -64,7 +65,7 @@ namespace PSIUWeb.Controllers
             return View(p);
         }
 
-        [HttpPost]
+        [HttpPost("DeleteConfirmed")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
@@ -75,13 +76,13 @@ namespace PSIUWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
+        [HttpGet("Insert")]
         public IActionResult Insert()
         {
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("Insert")]
         public IActionResult Insert(Psychologist p)
         {
             if (ModelState.IsValid)
