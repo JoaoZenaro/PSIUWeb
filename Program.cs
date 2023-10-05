@@ -17,8 +17,9 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(conn
 // Scoped Services
 // Serviços que são registrados para serem criados a cada requisição HTTP
 builder.Services.AddScoped<IPatientRepository, EFPatientRepository>();
+builder.Services.AddScoped<IPsychologistRepository, EFPsychologistRepository>();
 
-builder.Services.AddIdentity<AppUser, IdentityRole>( 
+builder.Services.AddIdentity<AppUser, IdentityRole>(
     options =>
     {
         options.User.RequireUniqueEmail = true;

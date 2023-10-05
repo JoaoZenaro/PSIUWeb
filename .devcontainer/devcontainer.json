@@ -2,7 +2,7 @@
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "devcontainer",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-	"postAttachCommand": "dotnet watch run --urls http://0.0.0.0:5000",
+	// "postAttachCommand": "dotnet watch run --urls http://0.0.0.0:5000",
 
 	// Configure tool-specific properties.
 	"customizations": {

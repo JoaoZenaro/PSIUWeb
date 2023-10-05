@@ -1,0 +1,47 @@
+@model Psychologist
+@{
+    ViewData["Title"] = "Editar Psicólogo: " + Model.Id;
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                Psicólogos
+            </li>
+            <li class="breadcrumb-item">
+                <a asp-action="Index" asp-controller="Psychologist">Listagem</a>
+            </li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <h1>Editar: <small class="text-body-secondary">Psicólogo @Model.Id</small></h1>
+    </div>
+
+    <hr />
+</div>
+
+<form asp-action="Edit" class="container">
+    <div class="row justify-content-center row-gap-3">
+
+        <div asp-validation-summary="ModelOnly"></div>
+        <input type="hidden" asp-for="Id" />
+
+        <div class="row row-gap-3 gap-md-0">
+            <div class="col-md-6">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" placeholder="Nome completo">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary float-end">Atualizar</button>
+            </div>
+        </div>
+
+    </div>
+</form>

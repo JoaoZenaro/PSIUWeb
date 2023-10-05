@@ -5,19 +5,19 @@ using PSIUWeb.Models;
 
 namespace PSIUWeb.Controllers
 {
-    public class PatientController : Controller
+    public class PsychologistController : Controller
     {
-        private IPatientRepository patientRepository;
+        private IPsychologistRepository psychologistRepository;
 
-        public PatientController(IPatientRepository _patientRepo)
+        public PsychologistController(IPsychologistRepository _PsychologistRepo)
         {
-            patientRepository = _patientRepo;
+            psychologistRepository = _PsychologistRepo;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            return View(patientRepository.GetPatients());
+            return View(psychologistRepository.GetPsychologists());
         }
 
         [HttpGet]
@@ -25,7 +25,7 @@ namespace PSIUWeb.Controllers
         {
             if (id <= 0 || id == null) return NotFound();
 
-            Patient? p = patientRepository.GetPatientById(id.Value);
+            Psychologist? p = psychologistRepository.GetPsychologistById(id.Value);
 
             if (p == null) return NotFound();
 
@@ -34,14 +34,14 @@ namespace PSIUWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Patient patient)
+        public IActionResult Edit(Psychologist Psychologist)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    patientRepository.Update(patient);
-                    return View("Index", patientRepository.GetPatients());
+                    psychologistRepository.Update(Psychologist);
+                    return View("Index", psychologistRepository.GetPsychologists());
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -49,7 +49,7 @@ namespace PSIUWeb.Controllers
                 }
 
             }
-            return View("Index", patientRepository.GetPatients());
+            return View("Index", psychologistRepository.GetPsychologists());
         }
 
         [HttpGet]
@@ -57,7 +57,7 @@ namespace PSIUWeb.Controllers
         {
             if (id == null) return NotFound();
 
-            Patient? p = patientRepository.GetPatientById(id.Value);
+            Psychologist? p = psychologistRepository.GetPsychologistById(id.Value);
 
             if (p == null) return NotFound();
 
@@ -70,7 +70,7 @@ namespace PSIUWeb.Controllers
         {
             if (id == 0) return NotFound();
 
-            patientRepository.Delete(id);
+            psychologistRepository.Delete(id);
 
             return RedirectToAction(nameof(Index));
         }
@@ -82,14 +82,14 @@ namespace PSIUWeb.Controllers
         }
 
         [HttpPost]
-        public IActionResult Insert(Patient p)
+        public IActionResult Insert(Psychologist p)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    patientRepository.Create(p);
-                    return View("Index", patientRepository.GetPatients());
+                    psychologistRepository.Create(p);
+                    return View("Index", psychologistRepository.GetPsychologists());
                 }
                 catch (Exception)
                 {

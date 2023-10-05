@@ -16,19 +16,21 @@ namespace PSIUWeb.Models
 
         [Required(ErrorMessage = "Informe a Data de nascimento.")]
         [Display(Name = "Data de nascimento")]
-        public DateTime BirthDate { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime? BirthDate { get; set; }
 
         [Required(ErrorMessage = "Informe o Peso.")]
         [Display(Name = "Peso")]
-        public decimal Weight { get; set; }
+        public decimal? Weight { get; set; }
 
         [Required(ErrorMessage = "Informe a Altura.")]
         [Display(Name = "Altura")]
-        public decimal Height { get; set; }
+        public decimal? Height { get; set; }
 
         [Required(ErrorMessage = "Informe a Etnia.")]
         [Display(Name = "Etnia")]
-        public Ethnicity Ethnicity { get; set; }
+        public Ethnicity? Ethnicity { get; set; }
 
         [ForeignKey("User")]
         public string? UserId { get; set; }

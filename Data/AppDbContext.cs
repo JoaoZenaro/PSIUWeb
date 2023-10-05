@@ -10,7 +10,17 @@ namespace PSIUWeb.Data
         public AppDbContext(DbContextOptions options) : base(options)
         {
         }
+
         public DbSet<Patient>? Patients { get; set; }
+
+        public DbSet<Psychologist>? Psychologists { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Psychologist>().OwnsOne(c => c.Address);
+
+            base.OnModelCreating(modelBuilder);
+        }
 
     }
 }

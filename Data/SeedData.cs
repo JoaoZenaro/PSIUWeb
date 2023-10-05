@@ -19,7 +19,7 @@ namespace PSIUWeb.Data
                 context.Patients?.AddRange(
                     new Patient
                     {
-                        Name = "Mauro",
+                        Name = "John Doe",
                         BirthDate = new DateTime(1984, 7, 5),
                         Ethnicity = Ethnicity.Pardo,
                         Height = 180,
@@ -27,7 +27,7 @@ namespace PSIUWeb.Data
                     },
                     new Patient
                     {
-                        Name = "Marcos",
+                        Name = "Jane Smith",
                         BirthDate = new DateTime(1987, 2, 28),
                         Ethnicity = Ethnicity.Pardo,
                         Height = 175,
@@ -37,7 +37,22 @@ namespace PSIUWeb.Data
 
                 context.SaveChanges();
             }
-        }
 
+            // if (!context.Psychologists?.Any() ?? false)
+            // {
+            //     context.Psychologists?.AddRange(
+            //         new Psychologist
+            //         {
+            //             Name = "Alice"
+            //         },
+            //         new Psychologist
+            //         {
+            //             Name = "Bob"
+            //         }
+            //     );
+
+            //     context.SaveChanges();
+            // }
+        }
     }
 }

@@ -1,6 +1,6 @@
 @model Patient
 @{
-    ViewData["Title"] = "Editar Paciente: " + Model.Id;
+    ViewData["Title"] = "Inserir Paciente";
 }
 
 <div class="container">
@@ -16,13 +16,13 @@
     </nav>
 
     <div class="row">
-        <h1>Editar: <small class="text-body-secondary">Paciente @Model.Id</small></h1>
+        <h1>Inserir: <small class="text-body-secondary">Paciente</small></h1>
     </div>
 
     <hr />
 </div>
 
-<form asp-action="Edit" class="container">
+<form asp-action="Insert" class="container">
     <div class="row justify-content-center row-gap-3">
 
         <div asp-validation-summary="ModelOnly"></div>
@@ -57,15 +57,16 @@
 
             <div class="col-md-4 form-group">
                 <label asp-for="Ethnicity" class="form-label"></label>
-                <select asp-for="Ethnicity" asp-items="Html.GetEnumSelectList<Ethnicity>()"
-                    class="form-select"></select>
+                <select asp-for="Ethnicity" asp-items="Html.GetEnumSelectList<Ethnicity>()" class="form-select">
+                    <option selcted value="">Selecione uma Etnia</option>
+                </select>
                 <span asp-validation-for="Ethnicity" class="text-danger"></span>
             </div>
         </div>
 
         <div class="row">
             <div class="col">
-                <button type="submit" class="btn btn-primary float-end">Atualizar</button>
+                <button type="submit" class="btn btn-primary float-end">Inserir</button>
             </div>
         </div>
 

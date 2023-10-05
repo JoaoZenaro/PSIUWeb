@@ -1,0 +1,44 @@
+@model Psychologist
+@{
+    ViewData["Title"] = "Excluir Psicólogo: " + Model.Id;
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                Psicólogos
+            </li>
+            <li class="breadcrumb-item">
+                <a asp-action="Index" asp-controller="Psychologist">Listagem</a>
+            </li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <h1>Excluir: <small class="text-body-secondary">Psicólogo @Model.Id</small></h1>
+    </div>
+
+    <hr />
+</div>
+
+<div class="container">
+    <div class="row justify-content-center row-gap-3">
+
+        <div class="row">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+            </dl>
+        </div>
+
+        <form asp-action="DeleteConfirmed">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Excluir" class="btn btn-danger" />
+        </form>
+    </div>
+</div>

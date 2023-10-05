@@ -24,5 +24,9 @@ namespace PSIUWeb.Models
         [ForeignKey("User")]
         public string? UserId { get; set; }
         public AppUser? User { get; set; }
+
+        [Required(ErrorMessage = "Informe o Endereço.")]
+        [Display(Name = "Endereço")]
+        public Address? Address { get; set; }
     }
 }
