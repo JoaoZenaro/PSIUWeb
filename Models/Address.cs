@@ -5,6 +5,13 @@ namespace PSIUWeb.Models
 {
     public class Address
     {
+        [Key]
+        public int Id { get; set; }
+
+        [ForeignKey("Psychologist")]
+        public int PsychologistId { get; set; }
+        public Psychologist? Psychologist { get; set; }
+
         [Required(ErrorMessage = "Informe o Logradouro.")]
         [Display(Name = "Logradouro")]
         public string? Street { get; set; }
@@ -27,5 +34,8 @@ namespace PSIUWeb.Models
         [Required(ErrorMessage = "Informe o CEP.")]
         [Display(Name = "CEP")]
         public string? ZipCode { get; set; }
+
+        [Display(Name = "Endereço Principal")]
+        public bool IsMainAddress { get; set; }
     }
 }

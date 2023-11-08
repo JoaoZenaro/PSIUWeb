@@ -2,12 +2,11 @@
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "devcontainer",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-	"postAttachCommand": "dotnet watch run --urls http://0.0.0.0:5000",
-
+	// "postAttachCommand": "dotnet watch run --urls http://0.0.0.0:5000",
 	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
-			"settings": { 
+			"settings": {
 				"mssql.connections": [
 					{
 						"server": "localhost,1433",
@@ -29,8 +28,11 @@
 				"ms-dotnettools.vscodeintellicode-csharp",
 				"ms-dotnettools.csdevkit",
 				"dbaeumer.vscode-eslint"
-			]			
+			]
 		}
 	},
-	"forwardPorts": [5000, 1433]
+	"forwardPorts": [
+		5000,
+		1433
+	]
 }
