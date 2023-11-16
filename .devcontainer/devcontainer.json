@@ -8,6 +8,9 @@
 			"extensions": [
 				"ms-dotnettools.vscodeintellicode-csharp",
 				"kreativ-software.csharpextensions"
+				// Good Database Extension if needed (eg. Codespaces)
+				// "mtxr.sqltools-driver-mssql",
+				// "mtxr.sqltools"
 			]
 		}
 	},

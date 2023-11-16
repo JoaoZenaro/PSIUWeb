@@ -181,6 +181,27 @@
                 </div>
             </div>
 
+            <h3 class="text-warning">Teste:</h3>
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link" aria-selected="false" disabled></button>
+                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+                        type="button" role="tab" aria-controls="nav-home" aria-selected="true">Informações
+                        Gerais</button>
+                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                        type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Endereço(s)</button>
+                </div>
+            </nav>
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
+                    tabindex="0">Geral</div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab"
+                    tabindex="0">
+                    Endereços
+                </div>
+            </div>
+
         </div>
     </form>
 
@@ -250,8 +271,6 @@
                             this.errors = data.errorList;
                             this.addressErrors = data.addressErrors;
                         }
-
-                        console.log(this.errors, this.addressErrors)
                     }).catch(error => {
                         console.error(error)
 

@@ -55,6 +55,45 @@
         </main>
     </div>
 
+    <div id="toaster-app" class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div v-for="(toast, index) in toasts" :key="index" class="toast align-items-center text-bg-success border-0"
+            role="alert" aria-live="assertive" aria-atomic="true" ref="toasts" data-bs-delay="3000">
+            <div class="d-flex">
+                <div class="toast-body">
+                    {{ toast.msg }}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const toasts = Vue.createApp({
+            data() {
+                return {
+                    toasts: []
+                }
+            },
+            methods: {
+                showToast(msg) {
+                    this.toasts.push({ msg });
+                    this.$nextTick(() => {
+                        var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+                        var toastList = toastElList.map((toastEl) => new bootstrap.Toast(toastEl));
+
+                        toastList.forEach(toast => {
+                            toast.show()
+                            toast._element.addEventListener('hidden.bs.toast', () => {
+                                this.toasts.splice(0, 1);
+                            })
+                        });
+                    });
+                }
+            }
+        }).mount('#toaster-app');
+    </script>
+
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2023 - PSIUWeb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
