@@ -12,7 +12,7 @@
     </a>
 </section>
 
-<section class="container">
+<section id="psychologist-index" class="container">
     <div class="table-responsive-xl">
         <table class="table table-striped table-hover">
             <thead>
@@ -28,44 +28,14 @@
             <tbody>
                 @foreach (var Psychologist in Model)
                 {
+                    var index = Psychologist.Id;
                     <tr>
                         <td>@Psychologist.Id</td>
                         <td>@Psychologist.Name</td>
                         <td>@Psychologist.CRP</td>
-                        <td>@Psychologist.hasClearance</td>
+                        <td>@(Psychologist.hasClearance ? "Sim" : "Não")</td>
                         <td>
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Logradouro</th>
-                                        <th scope="col">Número</th>
-                                        <th scope="col">Complemento</th>
-                                        <th scope="col">Cidade</th>
-                                        <th scope="col">Estado</th>
-                                        <th scope="col">CEP</th>
-                                        <th scope="col">Endereço Principal</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if (Psychologist.Addresses != null)
-                                    {
-                                        @foreach (var addr in Psychologist.Addresses)
-                                        {
-                                            <tr>
-                                                <td>@Html.DisplayFor(modelItem => addr.Street)</td>
-
-                                                @* <td>@addr.Street</td> *@
-                                                <td>@addr.Number</td>
-                                                <td>@addr.Complement</td>
-                                                <td>@addr.City</td>
-                                                <td>@addr.State</td>
-                                                <td>@addr.ZipCode</td>
-                                                <td>@(addr.IsMainAddress ? "Sim" : "Não")</td>
-                                            </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
+                            <a href="#" @@click.prevent="toggleAddressRow(@index)">Expandir</a>
                         </td>
                         <td>
                             <div class="row">
@@ -82,8 +52,69 @@
                             </div>
                         </td>
                     </tr>
+                    <tr id="tableaddresses-@index" v-cloak>
+                        <td colspan="6" v-if="showAddressRows[@index]">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Logradouro</th>
+                                        <th scope="col">Número</th>
+                                        <th scope="col">Complemento</th>
+                                        <th scope="col">Cidade</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">CEP</th>
+                                        <th scope="col">Endereço Principal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var addr in Psychologist.Addresses!)
+                                    {
+                                        <tr>
+                                            <td>@addr.Street</td>
+                                            <td>@addr.Number</td>
+                                            <td>@addr.Complement</td>
+                                            <td>@addr.City</td>
+                                            <td>@addr.State</td>
+                                            <td>@addr.ZipCode</td>
+                                            <td>@(addr.IsMainAddress ? "Sim" : "Não")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
     </div>
 </section>
+
+@section Scripts {
+
+    <script type="module">
+        import autoAnimate from 'https://cdn.jsdelivr.net/npm/@@formkit/auto-animate/index.min.js';
+
+        Vue.createApp({
+            data() {
+                return {
+                    showAddressRows: {},
+                };
+            },
+            methods: {
+                toggleAddressRow(index) {
+                    this.showAddressRows[index] = !this.showAddressRows[index];
+                },
+            },
+            mounted() {
+                this.showAddressRows = Object.fromEntries(
+                    Array.from(this.$el.querySelectorAll('[id^=tableaddresses]')).map(row => {
+                        const id = row.id.split('-')[1];
+                        return [id, false];
+                    })
+                );
+                document.querySelectorAll('[id^=tableaddresses]').forEach(el => autoAnimate(el))
+            },
+        }).mount('#psychologist-index');
+    </script>
+
+}

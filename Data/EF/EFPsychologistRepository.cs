@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using PSIUWeb.Data.Interface;
 using PSIUWeb.Models;
 using System.Linq;
@@ -48,7 +49,7 @@ namespace PSIUWeb.Data.EF
 
         public IQueryable<Psychologist>? GetPsychologists()
         {
-            return context.Psychologists;
+            return context.Psychologists?.Include(x => x.Addresses);
         }
 
         public Psychologist? Update(Psychologist p)

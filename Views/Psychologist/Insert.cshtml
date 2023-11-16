@@ -3,12 +3,6 @@
     ViewData["Title"] = "Inserir Psicólogo";
 }
 
-<style>
-    [v-cloak] {
-        display: none;
-    }
-</style>
-
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -28,7 +22,7 @@
     <hr />
 </div>
 
-<div id="insert-section">
+<div id="psychologist-details-section">
 
     <form asp-action="Insert" id="psico-insert-form" method="post" v-on:submit.prevent="onSubmit"
         class="container has-validation" v-cloak>
@@ -275,7 +269,7 @@
             mounted() {
                 autoAnimate(document.getElementById("list"));
             }
-        }).mount('#insert-section');
+        }).mount('#psychologist-details-section');
     </script>
 
     @{
