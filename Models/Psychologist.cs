@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PSIUWeb.Models
 {
@@ -26,7 +27,7 @@ namespace PSIUWeb.Models
         public AppUser? User { get; set; }
 
         [Required(ErrorMessage = "Informe o Endereço.")]
-        [Display(Name = "Endereço")]
-        public Address? Address { get; set; }
+        [Display(Name = "Endereço(s)")]
+        public List<Address>? Addresses { get; set; }
     }
 }

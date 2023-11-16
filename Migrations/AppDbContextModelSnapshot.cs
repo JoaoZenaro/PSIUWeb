@@ -17,7 +17,7 @@ namespace PSIUWeb.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.22")
+                .HasAnnotation("ProductVersion", "6.0.24")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -153,6 +153,50 @@ namespace PSIUWeb.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("PSIUWeb.Models.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Complement")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsMainAddress")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PsychologistId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PsychologistId");
+
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("PSIUWeb.Models.AppUser", b =>
@@ -350,6 +394,17 @@ namespace PSIUWeb.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PSIUWeb.Models.Address", b =>
+                {
+                    b.HasOne("PSIUWeb.Models.Psychologist", "Psychologist")
+                        .WithMany("Addresses")
+                        .HasForeignKey("PsychologistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Psychologist");
+                });
+
             modelBuilder.Entity("PSIUWeb.Models.Patient", b =>
                 {
                     b.HasOne("PSIUWeb.Models.AppUser", "User")
@@ -365,46 +420,12 @@ namespace PSIUWeb.Migrations
                         .WithMany()
                         .HasForeignKey("UserId");
 
-                    b.OwnsOne("PSIUWeb.Models.Address", "Address", b1 =>
-                        {
-                            b1.Property<int>("PsychologistId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("City")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("Complement")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("Number")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("State")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("Street")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("ZipCode")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("PsychologistId");
-
-                            b1.ToTable("Psychologists");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PsychologistId");
-                        });
-
-                    b.Navigation("Address")
-                        .IsRequired();
-
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PSIUWeb.Models.Psychologist", b =>
+                {
+                    b.Navigation("Addresses");
                 });
 #pragma warning restore 612, 618
         }

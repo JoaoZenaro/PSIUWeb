@@ -15,9 +15,14 @@ namespace PSIUWeb.Data
 
         public DbSet<Psychologist>? Psychologists { get; set; }
 
+        public DbSet<Address>? Addresses { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Psychologist>().OwnsOne(c => c.Address);
+            modelBuilder.Entity<Address>()
+                    .HasOne(i => i.Psychologist)
+                    .WithMany(a => a.Addresses)
+                    .HasForeignKey(p => p.PsychologistId);
 
             base.OnModelCreating(modelBuilder);
         }

@@ -83,7 +83,7 @@ namespace PSIUWeb.Controllers
         }
 
         [HttpPost("Insert")]
-        public IActionResult Insert(Psychologist p)
+        public IActionResult Insert([FromBody] Psychologist p)
         {
             if (ModelState.IsValid)
             {
@@ -97,7 +97,25 @@ namespace PSIUWeb.Controllers
                     throw;
                 }
             }
-            return View();
+            else
+            {
+                var addressErrors = ModelState.Keys
+                    .Where(key => key.StartsWith("Addresses"))
+                    .Select(key => key.ToString().Split(".")[0])
+                    .ToArray().Distinct();
+
+                return Json(new
+                {
+                    success = false,
+                    errorList = ModelState.ToDictionary(
+                        kvp => kvp.Key,
+                        kvp => kvp.Value?.Errors.Select(e => e.ErrorMessage)
+                    ),
+                    addressErrors
+                });
+            }
+
+            // return View(p);
         }
     }
 }

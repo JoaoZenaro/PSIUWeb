@@ -7,6 +7,14 @@
 * SQL Server
 * Docker
 
+# Referência de comandos
+```
+dotnet tool install --global dotnet-ef
+export PATH="$PATH:/root/.dotnet/tools"
+dotnet watch run --urls http://0.0.0.0:5000
+Initial Catalog=PSIU; Data Source=localhost,1433; Persist Security Info=True;User ID=SA;Password=Admin#2023
+```
+
 ## Escopo
 Elaboração de projeto para desenvolvimento de um software WebApp para auxílio na SAÚDE MENTAL.
 > Sugestão de nome: PSI-U.APP.BR

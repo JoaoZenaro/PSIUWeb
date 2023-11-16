@@ -22,30 +22,256 @@
     <hr />
 </div>
 
-<form asp-action="Insert" class="container">
-    <div class="row justify-content-center row-gap-3">
+<div id="psychologist-details-section">
 
-        <div asp-validation-summary="ModelOnly"></div>
-        <input type="hidden" asp-for="Id" />
+    <form asp-action="Insert" id="psico-insert-form" method="post" v-on:submit.prevent="onSubmit"
+        class="container has-validation" v-cloak>
+        <div class="row justify-content-center row-gap-3">
 
-        <div class="row row-gap-3 gap-md-0">
-            <div class="col-md-6">
-                <label asp-for="Name" class="form-label"></label>
-                <input asp-for="Name" class="form-control" placeholder="Nome completo">
-                <span asp-validation-for="Name" class="text-danger"></span>
+            <div asp-validation-summary="ModelOnly"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="row row-gap-3 gap-md-0">
+                <div class="col-md-6">
+                    <label for="name" class="form-label">Nome</label>
+                    <input id="name" v-model="psychologist.name" type="text" class="form-control"
+                        placeholder="Nome completo" required>
+                    <div class="invalid-feedback">
+                        {{ errors.Name && errors.Name[0] }}
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="crp" class="form-label">CRP</label>
+                    <input id="crp" v-model="psychologist.crp" type="text" class="form-control" placeholder="Número CRP"
+                        required>
+                    <div class="invalid-feedback" v-if="typeof errors.CRP !== 'undefined'">
+                        {{ errors.CRP && errors.CRP[0] }}
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col">
-                <button type="submit" class="btn btn-primary float-end">Inserir</button>
+            <div class="row">
+                <div class="col">
+                    <label class="form-check-label float-end">
+                        <input class="form-check-input" type="checkbox" v-model="psychologist.hasClearance">
+                        Possui liberação?
+                    </label>
+                </div>
             </div>
-        </div>
 
-    </div>
-</form>
+            <div id="list" class="row">
+                <div class="col-sm-4 mb-3" v-for="(address, index) in psychologist.addresses" :key="address.id">
+
+                    <div class="card"
+                        :class="addressErrors.find(e => e == `Addresses[${index}]`) ? 'border-danger-subtle' : ''">
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between mb-2">
+                                <h5 class="card-title">Endereço {{ index + 1 }}
+                                    <span class="text-danger" v-if="errors[`Addresses[${index}].Street`]">*</span>
+                                </h5>
+
+                                <div class="form-check form-switch">
+                                    <input type="checkbox" v-model="address.ismainaddress"
+                                        v-on:change="checkMainAddress(address.id)" class="form-check-input"
+                                        role="switch" />
+                                    <label class="form-check-label">Endereço Principal</label>
+                                </div>
+                            </div>
+
+                            <div class="row gap-3 px-2">
+                                <button type="button" class="btn btn-primary float-end col" data-bs-toggle="modal"
+                                    :data-bs-target="'#modal' + address.id">
+                                    Visualizar
+                                </button>
+                                <button type="button" v-show="!address.ismainaddress" class="btn btn-outline-danger col"
+                                    @@click.prevent="rmAddress(address.id)">
+                                    <i class="bi bi-x-circle me-1"></i>Excluir</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="modal fade" :id="'modal' + address.id" data-bs-backdrop="static" tabindex="-1"
+                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Endereço {{ index + 1 }}</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body row g-3">
+                                    <div class="col-md-12">
+                                        <label for="street" class="form-label">Logradouro</label>
+                                        <input id="street" v-model="address.street" type="text" class="form-control"
+                                            placeholder="Rua/Avenida/Alameda" required>
+                                        <div class="invalid-feedback" v-if="errors[`Addresses[${index}].Street`]">
+                                            {{ errors[`Addresses[${index}].Street`][0] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-6">
+                                        <label for="number" class="form-label">Número</label>
+                                        <input id="number" v-model="address.number" type="text" class="form-control"
+                                            placeholder="Número" required>
+                                        <div class="invalid-feedback" v-if="errors[`Addresses[${index}].Number`]">
+                                            {{ errors[`Addresses[${index}].Number`][0] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-8 col-6">
+                                        <label for="complement" class="form-label">Complemento</label>
+                                        <input id="complement" v-model="address.complement" type="text"
+                                            class="form-control" placeholder="Complemento (se houver)">
+                                    </div>
+
+                                    <div class="col-md-4 col-6">
+                                        <label for="zipcode" class="form-label">CEP</label>
+                                        <input id="zipcode" v-model="address.zipcode" type="text" class="form-control"
+                                            placeholder="CEP" required>
+                                        <div class="invalid-feedback" v-if="errors[`Addresses[${index}].ZipCode`]">
+                                            {{ errors[`Addresses[${index}].ZipCode`][0] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-6">
+                                        <label for="city" class="form-label">Cidade</label>
+                                        <input id="city" v-model="address.city" type="text" class="form-control"
+                                            placeholder="Cidade" required>
+                                        <div class="invalid-feedback" v-if="errors[`Addresses[${index}].City`]">
+                                            {{ errors[`Addresses[${index}].City`][0] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-6">
+                                        <label for="state" class="form-label">Estado</label>
+                                        <input id="state" v-model="address.state" type="text" class="form-control"
+                                            placeholder="Estado" required>
+                                        <div class="invalid-feedback" v-if="errors[`Addresses[${index}].State`]">
+                                            {{ errors[`Addresses[${index}].State`][0] }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary"
+                                        data-bs-dismiss="modal">Salvar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2" key="insertbutton">
+                <div class="col">
+                    <button type="button" class="btn btn-success btn-sm" @@click.prevent="addAddress">
+                        <i class="bi bi-plus-circle me-1"></i>Adicionar Endereço</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <button v-if="!insertLoading" type="submit" class="btn btn-primary float-end">Inserir</button>
+                    <button v-else class="btn btn-primary float-end" type="button" disabled>
+                        <span class="spinner-grow spinner-grow-sm me-1" aria-hidden="true"></span>
+                        <span role="status">Inserindo...</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
 
 @section Scripts {
+    <script type="module">
+        import autoAnimate from 'https://cdn.jsdelivr.net/npm/@@formkit/auto-animate/index.min.js';
+
+        Vue.createApp({
+            data() {
+                return {
+                    insertLoading: false,
+                    errors: Object,
+                    addressErrors: [],
+                    mainAddressId: '',
+                    psychologist: {
+                        name: '',
+                        crp: '',
+                        hasClearance: false,
+                        addresses: []
+                    }
+                }
+            },
+            methods: {
+                addAddress() {
+                    this.psychologist.addresses.push({
+                        id: new Date().getTime(),
+                        street: '',
+                        number: '',
+                        complement: '',
+                        city: '',
+                        state: '',
+                        zipcode: '',
+                        ismainaddress: false
+                    });
+                },
+                rmAddress(id) {
+                    const index = this.psychologist.addresses.findIndex(i => i.id === id)
+                    this.psychologist.addresses.splice(index, 1);
+                },
+                checkMainAddress(id) {
+                    this.psychologist.addresses.map(obj => {
+                        if (obj.id == id) obj.ismainaddress = true;
+                        else obj.ismainaddress = false;
+                    })
+                },
+                onSubmit() {
+                    this.psychologist.addresses.forEach(address => delete address.id);
+                    this.insertLoading = true;
+
+                    document.querySelector("#psico-insert-form").classList.add("was-validated")
+
+                    fetch('/Psico/Insert', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(this.psychologist)
+
+                    }).then(response => {
+                        if (response.ok) return response.json();
+                        else throw new Error('Something went wrong');
+
+                    }).then(data => {
+                        if (!data.success) {
+                            this.errors = data.errorList;
+                            this.addressErrors = data.addressErrors;
+                        }
+
+                        console.log(this.errors, this.addressErrors)
+                    }).catch(error => {
+                        console.error(error)
+
+                    }).finally(() => {
+                        setTimeout(() => this.insertLoading = false, 1000)
+
+                        console.log(this.addAddresserrors)
+                    })
+                }
+            },
+            beforeMount() {
+                this.addAddress();
+                this.psychologist.addresses[0].ismainaddress = true;
+            },
+            mounted() {
+                autoAnimate(document.getElementById("list"));
+            }
+        }).mount('#psychologist-details-section');
+    </script>
+
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
