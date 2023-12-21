@@ -5,22 +5,14 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <div id="app">
-        @* <input v-model="inputValue" type="text" placeholder="Type something"> *@
-        @* <p>You entered: {{ inputValue }}</p> *@
+    <div x-data="{items: [1, 2, 3]}">
+        <div x-autoanimate>
+            <template x-for="(item, index) in items" :key="`${item}`">
+                <div x-text="item" @@click="items.splice(index, 1)"></div>
+            </template>
+        </div>
+        <div @@click="items.push(Math.floor((Math.random()*1000 + 1)))">
+            Add Item
+        </div>
     </div>
 </div>
-
-@* @section Scripts {
-<script>
-const app = Vue.createApp({
-data() {
-return {
-inputValue: ''
-};
-}
-});
-
-app.mount('#app');
-</script>
-} *@

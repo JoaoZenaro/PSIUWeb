@@ -40,9 +40,9 @@
                                     </a>
                                 </div>
                                 <div class="col-6 d-flex justify-content-center">
-                                    <a asp-controller="Patient" asp-action="Delete" asp-route-Id="@patient.Id">
-                                        <i class="bi bi-trash3-fill text-danger" title="Excluir"></i>
-                                    </a>
+                                    @* <a asp-controller="Patient" asp-action="Delete" asp-route-Id="@patient.Id">
+                                <i class="bi bi-trash3-fill text-danger" title="Excluir"></i>
+                                </a> *@
                                     <a role="button" class="delete-link" data-id="@patient.Id" data-bs-toggle="modal"
                                         data-bs-target="#deleteConfirmationModal">
                                         <i class="bi bi-trash3-fill text-danger" title="Excluir"></i>
@@ -70,7 +70,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <form id="deleteForm" method="post">
+                <form id="deleteForm" method="post" asp-controller="Patient" asp-action="DeleteConfirmed">
+                    @* <input type="hidden" asp-for="Id" /> *@
                     <button type="submit" class="btn btn-danger">Excluir</button>
                 </form>
             </div>
@@ -78,16 +79,15 @@
     </div>
 </div>
 
-<button id="test-btn">dnklsandklsankldsakln</button>
-
 @section Scripts {
     <script>
-        $("#test-btn").click(() => toasts.showToast("Valor Removido com Sucesso!"))
-
         $(document).ready(function () {
             $(".delete-link").on("click", function () {
                 var patientId = $(this).data("id");
                 $("#deleteForm").attr("action", "/Patient/DeleteConfirmed?id=" + patientId);
+
+        @* do this after it gets deleted *@
+                    toasts.showToast("Valor Removido com Sucesso!")
             });
         });
     </script>
